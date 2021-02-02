@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="random-input" class="form-control" type="text">
+                    <button id="random-button" onclick=" genaratePin ()" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input id="typed-button"class="form-control" type="text">
+                    <div class="numbers">
+                        <div id = "calculator-digit" class="calc-body">
+                            <div class="calc-button-row">
+                              <div class="button">7</div>
+                              <div class="button">8</div>
+                              <div class="button">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button">4</div>
+                              <div class="button">5</div>
+                              <div class="button">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button">1</div>
+                              <div class="button">2</div>
+                              <div class="button">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div id="back" class="button">B</div>
+                                <div class="button">0</div>
+                                <div class="button">C</div>
+                            </div>
+                            <div>
+                                <button id="submit" type="submit" class="submit-btn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+            <p id ="warning" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p id="welcome"class="notify">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+
+
+    <script>
+        
+        function getPin () {
+                const random = Math.random()*10000;
+                const pin = parseInt(random) + "" ;
+                if (pin.length == 4) {
+                return pin;                
+                }
+                else {
+                    return getPin();
+                }                              
+            }
+
+        function genaratePin (){
+            document.getElementById('random-input').value = getPin();
+        }  
+        
+        document.getElementById('calculator-digit').addEventListener('click',function(event){
+             const digit = event.target.innerText;
+             if(isNaN(digit)){
+
+                if(digit === 'C'){
+                    document.getElementById('typed-button').value = '';
+                }
+                if(digit === 'B'){                    
+                }
+
+             }
+             else{
+                const typedButton = document.getElementById('typed-button');
+                typedButton.value = typedButton.value + digit;
+                                
+             }
+        })
+
+       
+     document.getElementById('submit').addEventListener('click',function(){
+        
+        var randomInput = document.getElementById('random-input').value;
+        var typedInput = document.getElementById('typed-button').value;
+
+        if(randomInput == typedInput){
+
+           document.getElementById('welcome').style.display = 'block'; 
+           document.getElementById('warning').style.display = 'none';
+        }
+        else{
+            
+            document.getElementById('welcome').style.display = 'none'; 
+            document.getElementById('warning').style.display = 'block';
+        
+        }
+        })
+            
+              
+    </script>
+
+</body>
+</html>
